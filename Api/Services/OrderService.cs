@@ -48,41 +48,33 @@ namespace online_ordering_api.Services
                 }
 
                 // * Calculate order price.
-                var createdOn = new DateTime();
+                var createdOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 var createdBy = request.CustomerID;
-                var updatedOn = new DateTime();
+                var updatedOn =  DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 var updatedBy = request.CustomerID;
                 var orderPrice = (request.Amount * request.ProductPrice);
                 var productStatus = 1; // * pending status.
 
-                string query = $@"INSERT INTO SaleOrderEntiy(AMOUNT,PRODUCT_PRICE,PRODUCT_NAME,PRODUCT_ID,ORDER_PRICE,STATUS,CREATED_ON,CREATED_BY,UPDATED_ON,UPDATED_BY) 
+                string query = $@"INSERT INTO SALE_ORDER(AMOUNT,PRODUCT_PRICE,PRODUCT_NAME,PRODUCT_CODE,ORDER_PRICE,STATUS,CREATED_ON,CREATED_BY,UPDATED_ON,UPDATED_BY) 
                                 values(
-                                    N'{request.Amount}',
-                                    N'{request.ProductPrice}',
+                                    {request.Amount},
+                                    {request.ProductPrice},
                                     N'{request.ProductName}',
-                                    '{request.ProductID}',
-                                    '{orderPrice}'
-                                    '{productStatus}',
+                                    {request.ProductID},
+                                    {orderPrice},
+                                    {productStatus},
                                     '{createdOn}',
-                                    '{createdBy}',
+                                    {createdBy},
                                     '{updatedOn}',
-                                    '{updatedBy}',
-                                     )"; 
+                                    {updatedBy}
+                                     )";
 
-                SaleOrderEntiy data = null;
                 using (TransactionScope scope = new TransactionScope())
                 {
-                    data = _dataManager.ExecuteReaderData<SaleOrderEntiy>(query);
+                    _dataManager.ExecuteNoneQuery(query);
                     scope.Complete();
                 }
 
-                if (data == null)
-                {
-                    result.code = "";
-                    result.msg = "insert data error.";
-                    return result;
-
-                }
 
                 result.code = "BR-XX-XX00";
                 result.msg = "Success";
