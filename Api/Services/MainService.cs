@@ -72,7 +72,7 @@ namespace online_ordering_api.Services
                 }
 
                 result.CustomerId = data.Id;
-                result.CÏustomerName = data.Name;
+                result.CustomerName = data.Name;
                 result.code = "BR-XX-XX00";
                 result.msg = "Success";
                 result.httpStatus = 200;

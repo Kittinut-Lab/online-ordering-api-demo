@@ -7,7 +7,7 @@ namespace online_ordering_api.Models
     {
         public int? CustomerId { get; set; }
 
-        public string CÏustomerName { get; set; }
+        public string CustomerName { get; set; }
 
     }
 }
